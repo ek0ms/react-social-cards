@@ -7,14 +7,15 @@ const CardList = (props) => {
     return (
       <Card
         avatar={card.avatar}
-        name={_.capitalize(card.name)}
-        timestamp={new Date().toDateString().slice(4, -5)}
+        name={card.name}
+        timestamp={card.timestamp}
         userText={card.userText}
         linkImg={card.imageUrl}
         title={card.title}
         description={card.description}
         rootUrl={card.rootUrl}
         onLikeClick={props.onLikeClick}
+        onShareClick={props.onShareClick}
         key={card.id}
         id={card.id}
         url={card.url}

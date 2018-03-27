@@ -47,7 +47,7 @@ class Card extends Component {
             <i className="far fa-comment" />
           </span>
           {this.showLikes()}
-          <span className="shares" onClick={(event) => event}>
+          <span className="shares" onClick={() => this.props.onShareClick(this.props)}>
             <i className="far fa-share-square" />
           </span>
         </div>

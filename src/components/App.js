@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 import CardList from './CardList';
 import SearchBar from './SearchBar';
-import _ from 'lodash';
+import Modal from './Modal';
 
 class App extends Component {
   constructor(props) {
@@ -10,9 +11,9 @@ class App extends Component {
     this.state = {
       cards: {},
       currentUser: { 500: { id: 500 } },
+      modal: { display: false, card: {} },
     };
     this.counter = 0;
-    this.onLikeClick = this.onLikeClick.bind(this);
   }
 
   linkFetch = async (url) => {
@@ -35,7 +36,7 @@ class App extends Component {
       })
       .join(' ');
 
-    const regExPattern = /^(?:https?:\/\/)?(?:[^@\/\n]+@)?(?:www\.)?([^:\/\n]+)/;
+    const regExPattern = /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\n]+)/;
     const rootUrl = regExPattern.exec(url)[1];
 
     return { imageUrl, title, description, url, rootUrl };
@@ -46,7 +47,7 @@ class App extends Component {
     const json = await response.json();
 
     const user = json.results[0];
-    const name = user.name.first;
+    const name = _.capitalize(user.name.first);
     const avatar = user.picture.medium;
 
     return { name, avatar };
@@ -73,6 +74,7 @@ class App extends Component {
 
   cardConstructor = async (url) => {
     let id = this.counter;
+    const timestamp = new Date().toDateString().slice(4, -5);
     const randomLikesNumber = Math.random() > 0.4 ? Math.floor(Math.random() * 150 + 50) : 0;
     const likes = this.likesGenerator(randomLikesNumber);
 
@@ -80,7 +82,7 @@ class App extends Component {
       this.linkFetch(url),
       this.userFetch(),
       this.ipsumFetch(),
-    ]).then((response) => Object.assign(...response, { id }, { likes }));
+    ]).then((response) => Object.assign(...response, { id }, { likes }, { timestamp }));
 
     this.counter += 1;
     return { [cardProperties.id]: { ...cardProperties } };
@@ -125,15 +127,33 @@ class App extends Component {
     }
   };
 
+  onShareClick = (card) => {
+    this.setState({ modal: { display: true, card } });
+  };
+
+  onModalClick = (event) => {
+    if (event.target.className === 'modal') {
+      this.setState({ modal: { display: false } });
+    }
+  };
+
   render() {
+    const displayModal = this.state.modal.display;
+
     return (
       <div className="App">
         <SearchBar cardAdder={this.cardAdder} />
         <CardList
           cards={this.state.cards}
           onLikeClick={this.onLikeClick}
+          onShareClick={this.onShareClick}
           currentUser={this.state.currentUser}
         />
+        {displayModal ? (
+          <Modal card={this.state.modal.card} onModalClick={this.onModalClick} />
+        ) : (
+          <noscript />
+        )}
       </div>
     );
   }
