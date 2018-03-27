@@ -28,7 +28,7 @@ class Modal extends Component {
             <i className="fas fa-share-alt" />
           </span>
           <span className="modal-avatar">
-            <i class="fas fa-user" />
+            <i className="fas fa-user" />
           </span>
         </div>
         <div className="modal-body">

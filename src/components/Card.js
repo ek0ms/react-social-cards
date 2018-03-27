@@ -25,9 +25,7 @@ class Card extends Component {
         <div className="userInfo">
           <img src={this.props.avatar} className="avatar" alt="avatar" />
           <div className="userDetails">
-            <a href="#" className="username">
-              {this.props.name}
-            </a>
+            <a className="username">{this.props.name}</a>
             <p className="timestamp">{this.props.timestamp}</p>
           </div>
         </div>
