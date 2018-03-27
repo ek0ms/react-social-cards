@@ -13,14 +13,19 @@ const CardList = (props) => {
         linkImg={card.imageUrl}
         title={card.title}
         description={card.description}
-        rootLink="website.com"
-        onInteractionClick={props.onInteractionClick}
+        rootUrl={card.rootUrl}
+        onLikeClick={props.onLikeClick}
         key={card.id}
+        id={card.id}
+        url={card.url}
+        likes={card.likes}
+        comments={card.comments}
+        currentUser={props.currentUser}
       />
     );
   });
 
-  return <ul>{cardItems}</ul>;
+  return <ul className="cardList">{cardItems}</ul>;
 };
 
 export default CardList;

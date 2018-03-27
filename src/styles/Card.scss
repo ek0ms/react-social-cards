@@ -1,11 +1,6 @@
-.App {
+.cardList {
   display: flex;
-  justify-content: space-around;
-  flex-flow: column nowrap;
-  align-items: center;
-}
-
-ul {
+  flex-flow: column-reverse nowrap;
   padding: 0;
 }
 
@@ -14,8 +9,13 @@ ul {
   flex-flow: column nowrap;
   padding: 15px 15px 0 15px;
   max-width: 525px;
-  border: 1px solid black;
   margin-bottom: 20px;
+  border-radius: 5px;
+  background-color: white;
+  border: 1px solid #e4d9f5;
+}
+
+.card:last-child {
 }
 
 .userInfo {
@@ -58,43 +58,49 @@ ul {
 }
 
 .linkContainer {
-  border: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
   border-radius: 5px;
   transition: border-color 0.3s;
   overflow: hidden;
-  display: flex;
   flex-flow: column nowrap;
   user-select: none;
 
-  &:hover {
-    border-color: #4d4d4d;
-
-    .cardImg {
-      border-color: #4d4d4d;
-    }
-
-    .linkInfo {
-      background-color: #f7f7f7;
-    }
-  }
-
   .cardImg {
-    border-bottom: 1px solid #ccc;
     width: 100%;
+    vertical-align: bottom;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    border-radius: 5px 5px 0 0;
     transition: border-color 0.3s;
   }
 
   .linkInfo {
     padding: 10px;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, border-color #4d4d4d;
 
     .linkContent {
       margin: 10px 0;
     }
 
-    .rootLink {
+    .rootUrl {
       color: #bbb;
     }
+  }
+}
+
+.card > a:hover {
+  .linkContainer {
+    border-color: #4d4d4d;
+
+    .cardImg {
+      border-color: #4d4d4d;
+    }
+  }
+
+  .linkInfo {
+    background-color: #f7f7f7;
   }
 }
 
@@ -108,9 +114,19 @@ ul {
   .comments,
   .shares {
     transition: color 0.3s;
+    flex: 0 0 50px;
 
     &:hover {
       cursor: pointer;
+    }
+
+    .fas.fa-heart {
+      color: red;
+    }
+
+    .likes-counter,
+    .comments-counter {
+      margin-left: 5px;
     }
   }
 
